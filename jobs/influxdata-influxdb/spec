@@ -1,0 +1,11 @@
+---
+name: influxdata-influxdb
+
+templates:
+  ctl.erb: bin/ctl
+  config.erb: config/influxdb.config
+
+packages:
+  - influxdata-influxdb
+
+properties: {}

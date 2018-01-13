@@ -1,0 +1,5 @@
+/* check process influxdata-influxdb
+  with pidfile /var/vcap/sys/run/influxdata-influxdb/pid
+  start program "/var/vcap/jobs/influxdata-influxdb/bin/ctl start"
+  stop program "/var/vcap/jobs/influxdata-influxdb/bin/ctl stop"
+  group vcap */

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+tar xzf influxdata/influxdb-1.4.2-static_linux_amd64.tar.gz
+cp -R  influxdb-*/* $BOSH_INSTALL_TARGET/

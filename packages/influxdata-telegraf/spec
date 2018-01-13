@@ -1,0 +1,7 @@
+---
+name: influxdata-telegraf
+
+dependencies: []
+
+files:
+  - influxdata/telegraf-1.5.1_linux_amd64.tar.gz

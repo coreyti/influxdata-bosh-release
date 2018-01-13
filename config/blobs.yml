@@ -1,1 +1,12 @@
---- {}
+influxdata/chronograf-1.4.0.1_linux_amd64.tar.gz:
+  size: 7995979
+  sha: 8382d5de8c62c6238f1579fc6b3bf0e42f3b7f8f
+influxdata/influxdb-1.4.2-static_linux_amd64.tar.gz:
+  size: 20616648
+  sha: 0dd1ff6c7dd09c90bad953c34aca2233707630d2
+influxdata/kapacitor-1.4.0_linux_amd64.tar.gz:
+  size: 22394956
+  sha: ae9c34a98c9a7792c3a15cafd4d24e4f7d881375
+influxdata/telegraf-1.5.1_linux_amd64.tar.gz:
+  size: 9278212
+  sha: eab81455cfcaf8985fdae1614a29cdae1f962b7a

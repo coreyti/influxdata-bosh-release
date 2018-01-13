@@ -1,0 +1,7 @@
+---
+name: influxdata-influxdb
+
+dependencies: []
+
+files:
+  - influxdata/influxdb-1.4.2-static_linux_amd64.tar.gz

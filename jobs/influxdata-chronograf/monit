@@ -1,0 +1,5 @@
+/* check process influxdata-chronograf
+  with pidfile /var/vcap/sys/run/influxdata-chronograf/pid
+  start program "/var/vcap/jobs/influxdata-chronograf/bin/ctl start"
+  stop program "/var/vcap/jobs/influxdata-chronograf/bin/ctl stop"
+  group vcap */

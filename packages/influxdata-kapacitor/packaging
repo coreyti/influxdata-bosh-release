@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+tar xzf influxdata/kapacitor-1.4.0_linux_amd64.tar.gz
+cp -R  kapacitor-*/* $BOSH_INSTALL_TARGET/

@@ -1,0 +1,11 @@
+---
+name: influxdata-telegraf
+
+templates:
+  ctl.erb: bin/ctl
+  config.erb: config/telegraf.config
+
+packages:
+  - influxdata-telegraf
+
+properties: {}

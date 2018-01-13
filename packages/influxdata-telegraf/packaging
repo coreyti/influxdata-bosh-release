@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+tar xzf influxdata/telegraf-1.5.1_linux_amd64.tar.gz
+cp -R  telegraf/* $BOSH_INSTALL_TARGET/

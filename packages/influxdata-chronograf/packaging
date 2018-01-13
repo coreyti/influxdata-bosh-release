@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+tar xzf influxdata/chronograf-1.4.0.1_linux_amd64.tar.gz
+cp -R  chronograf-*/* $BOSH_INSTALL_TARGET/
