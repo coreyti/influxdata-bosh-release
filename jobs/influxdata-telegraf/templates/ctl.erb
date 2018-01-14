@@ -10,12 +10,10 @@ case $1 in
     mkdir -p $RUN_DIR $LOG_DIR
     chown -R vcap:vcap $RUN_DIR $LOG_DIR
 
-    echo $$ > $PIDFILE
-
-    # exec chpst -u vcap:vcap /var/vcap/packages/influxdata-telegraf/usr/bin/telegraf \
-    #   -configPath=/var/vcap/jobs/influxdata-telegraf/config/telegraf.config \
-    #   1>>$LOG_DIR/stdout.log \
-    #   2>>$LOG_DIR/stderr.log
+    exec chpst -u vcap:vcap /var/vcap/packages/influxdata-telegraf/usr/bin/telegraf \
+      --config $CONF_DIR/telegraf.config \
+      1 >> $LOG_DIR/stdout.log \
+      2 >> $LOG_DIR/stderr.log
     ;;
 
   stop)

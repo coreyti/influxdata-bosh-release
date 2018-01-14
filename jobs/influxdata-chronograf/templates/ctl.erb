@@ -12,10 +12,11 @@ case $1 in
 
     echo $$ > $PIDFILE
 
-    # exec chpst -u vcap:vcap /var/vcap/packages/influxdata-chronograf/usr/bin/chronograf \
-    #   -configPath=/var/vcap/jobs/influxdata-chronograf/config/chronograf.config \
-    #   1>>$LOG_DIR/stdout.log \
-    #   2>>$LOG_DIR/stderr.log
+    exec chpst -u vcap:vcap /var/vcap/packages/influxdata-chronograf/usr/bin/chronograf \
+      --bolt-path /var/vcap/store/chronograf/chronograf.db \
+      --canned-path /var/vcap/packages/influxdata-chronograf/usr/share/chronograf/canned \
+      1 >> $LOG_DIR/stdout.log \
+      2 >> $LOG_DIR/stderr.log
     ;;
 
   stop)
@@ -29,3 +30,44 @@ case $1 in
     echo "Usage: $0 {start|stop}"
     ;;
 esac
+
+#       --resources-path=                       Path to directory of pre-canned dashboards, sources, kapacitors, and organizations (/usr/share/chronograf/resources) (default: canned) [$RESOURCES_PATH]
+#   -t, --token-secret=                         Secret to sign tokens [$TOKEN_SECRET]
+#       --auth-duration=                        Total duration of cookie life for authentication (in hours). 0 means authentication expires on browser close. (default: 720h) [$AUTH_DURATION]
+#   -i, --github-client-id=                     Github Client ID for OAuth 2 support [$GH_CLIENT_ID]
+#   -s, --github-client-secret=                 Github Client Secret for OAuth 2 support [$GH_CLIENT_SECRET]
+#   -o, --github-organization=                  Github organization user is required to have active membership [$GH_ORGS]
+#       --google-client-id=                     Google Client ID for OAuth 2 support [$GOOGLE_CLIENT_ID]
+#       --google-client-secret=                 Google Client Secret for OAuth 2 support [$GOOGLE_CLIENT_SECRET]
+#       --google-domains=                       Google email domain user is required to have active membership [$GOOGLE_DOMAINS]
+#       --public-url=                           Full public URL used to access Chronograf from a web browser. Used for OAuth2 authentication. (http://localhost:8888) [$PUBLIC_URL]
+#       --heroku-client-id=                     Heroku Client ID for OAuth 2 support [$HEROKU_CLIENT_ID]
+#       --heroku-secret=                        Heroku Secret for OAuth 2 support [$HEROKU_SECRET]
+#       --heroku-organization=                  Heroku Organization Memberships a user is required to have for access to Chronograf (comma separated) [$HEROKU_ORGS]
+#       --generic-name=                         Generic OAuth2 name presented on the login page [$GENERIC_NAME]
+#       --generic-client-id=                    Generic OAuth2 Client ID. Can be used own OAuth2 service. [$GENERIC_CLIENT_ID]
+#       --generic-client-secret=                Generic OAuth2 Client Secret [$GENERIC_CLIENT_SECRET]
+#       --generic-scopes=                       Scopes requested by provider of web client. (default: user:email) [$GENERIC_SCOPES]
+#       --generic-domains=                      Email domain users' email address to have (example.com) [$GENERIC_DOMAINS]
+#       --generic-auth-url=                     OAuth 2.0 provider's authorization endpoint URL [$GENERIC_AUTH_URL]
+#       --generic-token-url=                    OAuth 2.0 provider's token endpoint URL [$GENERIC_TOKEN_URL]
+#       --generic-api-url=                      URL that returns OpenID UserInfo compatible information. [$GENERIC_API_URL]
+#       --generic-api-key=                      JSON lookup key into OpenID UserInfo. (Azure should be userPrincipalName) (default: email) [$GENERIC_API_KEY]
+#       --auth0-domain=                         Subdomain of auth0.com used for Auth0 OAuth2 authentication [$AUTH0_DOMAIN]
+#       --auth0-client-id=                      Auth0 Client ID for OAuth2 support [$AUTH0_CLIENT_ID]
+#       --auth0-client-secret=                  Auth0 Client Secret for OAuth2 support [$AUTH0_CLIENT_SECRET]
+#       --auth0-organizations=                  Auth0 organizations permitted to access Chronograf (comma separated) [$AUTH0_ORGS]
+#       --status-feed-url=                      URL of a JSON Feed to display as a News Feed on the client Status page. (default: https://www.influxdata.com/feed/json) [$STATUS_FEED_URL]
+#       --custom-link=                          Custom link to be added to the client User menu. Multiple links can be added by using multiple of the same flag with different 'name:url' values, or as an
+#                                               environment variable with comma-separated 'name:url' values. E.g. via flags: '--custom-link=InfluxData:https://www.influxdata.com
+#                                               --custom-link=Chronograf:https://github.com/influxdata/chronograf'. E.g. via environment variable: 'export
+#                                               CUSTOM_LINKS=InfluxData:https://www.influxdata.com,Chronograf:https://github.com/influxdata/chronograf' [$CUSTOM_LINKS]
+#       --telegraf-system-interval=             Duration used in the GROUP BY time interval for the hosts list (default: 1m) [$TELEGRAF_SYSTEM_INTERVAL]
+#   -r, --reporting-disabled                    Disable reporting of usage stats (os,arch,version,cluster_id,uptime) once every 24hr [$REPORTING_DISABLED]
+#   -l, --log-level=choice[debug|info|error]    Set the logging level (default: info) [$LOG_LEVEL]
+#   -p, --basepath=                             A URL path prefix under which all chronograf routes will be mounted [$BASE_PATH]
+#       --prefix-routes                         Force chronograf server to require that all requests to it are prefixed with the value set in --basepath [$PREFIX_ROUTES]
+#   -v, --version                               Show Chronograf version info
+#
+# Help Options:
+#   -h, --help                                  Show this help message

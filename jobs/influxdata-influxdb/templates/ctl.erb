@@ -10,12 +10,11 @@ case $1 in
     mkdir -p $RUN_DIR $LOG_DIR
     chown -R vcap:vcap $RUN_DIR $LOG_DIR
 
-    echo $$ > $PIDFILE
-
-    # exec chpst -u vcap:vcap /var/vcap/packages/influxdata-influxdb/influx \
-    #   -configPath=/var/vcap/jobs/influxdata-influxdb/config/influxdb.config \
-    #   1>>$LOG_DIR/stdout.log \
-    #   2>>$LOG_DIR/stderr.log
+    exec chpst -u vcap:vcap /var/vcap/packages/influxdata-influxdb/influxd \
+      -config $CONF_DIR/influxdb.config \
+      -pidfile $PIDFILE \
+      1 >> $LOG_DIR/stdout.log \
+      2 >> $LOG_DIR/stderr.log
     ;;
 
   stop)

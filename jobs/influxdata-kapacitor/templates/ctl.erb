@@ -10,12 +10,11 @@ case $1 in
     mkdir -p $RUN_DIR $LOG_DIR
     chown -R vcap:vcap $RUN_DIR $LOG_DIR
 
-    echo $$ > $PIDFILE
-
-    # exec chpst -u vcap:vcap /var/vcap/packages/influxdata-kapacitor/usr/bin/kapacitor \
-    #   -configPath=/var/vcap/jobs/influxdata-kapacitor/config/kapacitor.config \
-    #   1>>$LOG_DIR/stdout.log \
-    #   2>>$LOG_DIR/stderr.log
+    exec chpst -u vcap:vcap /var/vcap/packages/influxdata-kapacitor/usr/bin/kapacitord \
+      -config $CONF_DIR/kapacitor.config \
+      -pidfile $PIDFILE \
+      1 >> $LOG_DIR/stdout.log \
+      2 >> $LOG_DIR/stderr.log
     ;;
 
   stop)
