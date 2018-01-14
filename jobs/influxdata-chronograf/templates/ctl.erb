@@ -12,10 +12,10 @@ case $1 in
 
     echo $$ > $PIDFILE
 
-    exec chpst -u vcap:vcap /var/vcap/packages/influxdata-chronograf/usr/bin/chronograf \
-      -configPath=/var/vcap/jobs/influxdata-chronograf/config/chronograf.config \
-      1>>$LOG_DIR/stdout.log \
-      2>>$LOG_DIR/stderr.log
+    # exec chpst -u vcap:vcap /var/vcap/packages/influxdata-chronograf/usr/bin/chronograf \
+    #   -configPath=/var/vcap/jobs/influxdata-chronograf/config/chronograf.config \
+    #   1>>$LOG_DIR/stdout.log \
+    #   2>>$LOG_DIR/stderr.log
     ;;
 
   stop)

@@ -1,5 +1,5 @@
-/* check process influxdata-telegraf
+check process influxdata-telegraf
   with pidfile /var/vcap/sys/run/influxdata-telegraf/pid
   start program "/var/vcap/jobs/influxdata-telegraf/bin/ctl start"
   stop program "/var/vcap/jobs/influxdata-telegraf/bin/ctl stop"
-  group vcap */
+  group vcap
