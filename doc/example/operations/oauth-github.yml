@@ -1,0 +1,22 @@
+---
+- type: replace
+  path: /instance_groups/name=influxdata/jobs/name=influxdata-chronograf/properties?/oauth/enabled
+  value: true
+
+- type: replace
+  path: /instance_groups/name=influxdata/jobs/name=influxdata-chronograf/properties?/oauth/token_secret
+  value: ((chronograf-oauth-token-secret))
+
+- type: replace
+  path: /instance_groups/name=influxdata/jobs/name=influxdata-chronograf/properties?/oauth/providers/github
+  value:
+    enabled: true
+    client_id: ((chronograf-github-client-id))
+    client_secret: ((chronograf-github-client-secret))
+    organizations: ((chronograf-github-organizations))
+
+- type: replace
+  path: /variables/-
+  value:
+    name: chronograf-oauth-token-secret
+    type: password

@@ -5,6 +5,23 @@ LOG_DIR=/var/vcap/sys/log/influxdata-chronograf
 DATA_DIR=/var/vcap/store/chronograf
 PIDFILE=$RUN_DIR/pid
 
+<% if p('oauth.enabled', false) %>
+
+export TOKEN_SECRET="<%= p('oauth.token_secret') %>"
+<% if p('oauth.auth_duration', nil) %>
+export AUTH_DURATION="<%= p('oauth.auth_duration') %>"
+<% end %>
+
+<% if p('oauth.providers.github.enabled', false) %>
+export GH_CLIENT_ID="<%= p('oauth.providers.github.client_id') %>"
+export GH_CLIENT_SECRET="<%= p('oauth.providers.github.client_secret') %>"
+<% if p('oauth.providers.github.organizations', nil) %>
+export GH_ORGS="<%= p('oauth.providers.github.organizations').join(',') %>"
+<% end %>
+<% end %>
+
+<% end %>
+
 case $1 in
   start)
     mkdir -p $RUN_DIR $LOG_DIR $DATA_DIR
@@ -32,11 +49,6 @@ case $1 in
 esac
 
 #       --resources-path=                       Path to directory of pre-canned dashboards, sources, kapacitors, and organizations (/usr/share/chronograf/resources) (default: canned) [$RESOURCES_PATH]
-#   -t, --token-secret=                         Secret to sign tokens [$TOKEN_SECRET]
-#       --auth-duration=                        Total duration of cookie life for authentication (in hours). 0 means authentication expires on browser close. (default: 720h) [$AUTH_DURATION]
-#   -i, --github-client-id=                     Github Client ID for OAuth 2 support [$GH_CLIENT_ID]
-#   -s, --github-client-secret=                 Github Client Secret for OAuth 2 support [$GH_CLIENT_SECRET]
-#   -o, --github-organization=                  Github organization user is required to have active membership [$GH_ORGS]
 #       --google-client-id=                     Google Client ID for OAuth 2 support [$GOOGLE_CLIENT_ID]
 #       --google-client-secret=                 Google Client Secret for OAuth 2 support [$GOOGLE_CLIENT_SECRET]
 #       --google-domains=                       Google email domain user is required to have active membership [$GOOGLE_DOMAINS]
