@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# TLS config -------------------------------------------------------------------
+export TLS_CERTIFICATE="/var/vcap/jobs/influxdata-chronograf/tls/chronograf.crt"
+export TLS_PRIVATE_KEY="/var/vcap/jobs/influxdata-chronograf/tls/chronograf.key"
+
+<% if p('oauth.enabled', false) %>
+# OAuth config -----------------------------------------------------------------
+export TOKEN_SECRET="<%= p('oauth.token_secret') %>"
+<% if p('oauth.auth_duration', nil) %>
+export AUTH_DURATION="<%= p('oauth.auth_duration') %>"
+<% end %>
+
+<% if p('oauth.providers.github.enabled', false) %>
+export GH_CLIENT_ID="<%= p('oauth.providers.github.client_id') %>"
+export GH_CLIENT_SECRET="<%= p('oauth.providers.github.client_secret') %>"
+<% if p('oauth.providers.github.organizations', nil) %>
+export GH_ORGS="<%= p('oauth.providers.github.organizations').join(',') %>"
+<% end %>
+<% end %>
+
+<% end %>
