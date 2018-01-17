@@ -1,0 +1,28 @@
+---
+addons:
+  - name: influxdata-telegraf
+    jobs:
+      - name: influxdata-telegraf
+        release: influxdata
+        properties:
+          global_tags:
+            environment: production
+          outputs:
+            influxdb:
+              password: ((/shared/influxdb-telegraf-password))
+        consumes:
+          influxdb: { from: influxdb, deployment: example }
+    include:
+      stemcell:
+        - os: ubuntu-trusty
+    properties: {}
+
+releases:
+  - name: influxdata
+    version: 0+dev.1516064761
+
+variables:
+  - name: /shared/influxdb-admin-password
+    type: password
+  - name: /shared/influxdb-telegraf-password
+    type: password

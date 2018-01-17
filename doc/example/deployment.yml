@@ -1,0 +1,66 @@
+features:
+  use_dns_addresses: true
+
+instance_groups:
+  - azs:
+    - z1
+    instances: 1
+    jobs:
+      - name: influxdata-influxdb
+        release: influxdata
+        properties:
+          admin_password: ((/shared/influxdb-admin-password))
+          telegraf_password: ((/shared/influxdb-telegraf-password))
+          http:
+            tls:
+              ca: ((influxdb-tls.ca))
+              certificate: ((influxdb-tls.certificate))
+              private_key: ((influxdb-tls.private_key))
+        provides:
+          influxdb: { as: influxdb, shared: true }
+      - name: influxdata-chronograf
+        release: influxdata
+        properties: {}
+      - name: influxdata-kapacitor
+        release: influxdata
+        properties: {}
+    name: influxdata
+    networks:
+      - name: default
+    persistent_disk: 1024
+    stemcell: default
+    vm_type: default
+
+name: example
+
+releases:
+  - name: influxdata
+    version: latest
+
+stemcells:
+  - alias: default
+    os: ubuntu-trusty
+    version: latest
+
+update:
+  canaries: 1
+  canary_watch_time: 1000-100000
+  max_in_flight: 32
+  serial: false
+  update_watch_time: 1000-100000
+
+variables:
+  - name: influxdb-ca
+    options:
+      common_name: influxdbCA
+      is_ca: true
+    type: certificate
+  - name: influxdb-tls
+    options:
+      alternative_names:
+      - "*.influxdata.default.example.bosh"
+      - localhost
+      - 127.0.0.1
+      ca: influxdb-ca
+      common_name: influxdata.default.example.bosh
+    type: certificate
