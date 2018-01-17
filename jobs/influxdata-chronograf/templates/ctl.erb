@@ -2,21 +2,21 @@
 
 RUN_DIR=/var/vcap/sys/run/influxdata-chronograf
 LOG_DIR=/var/vcap/sys/log/influxdata-chronograf
-CONF_DIR=/var/vcap/jobs/influxdata-chronograf/config
+DATA_DIR=/var/vcap/store/chronograf
 PIDFILE=$RUN_DIR/pid
 
 case $1 in
   start)
-    mkdir -p $RUN_DIR $LOG_DIR
-    chown -R vcap:vcap $RUN_DIR $LOG_DIR
+    mkdir -p $RUN_DIR $LOG_DIR $DATA_DIR
+    chown -R vcap:vcap $RUN_DIR $LOG_DIR $DATA_DIR
 
     echo $$ > $PIDFILE
 
     exec chpst -u vcap:vcap /var/vcap/packages/influxdata-chronograf/usr/bin/chronograf \
       --bolt-path /var/vcap/store/chronograf/chronograf.db \
       --canned-path /var/vcap/packages/influxdata-chronograf/usr/share/chronograf/canned \
-      1 >> $LOG_DIR/stdout.log \
-      2 >> $LOG_DIR/stderr.log
+      1>> $LOG_DIR/stdout.log \
+      2>> $LOG_DIR/stderr.log
     ;;
 
   stop)

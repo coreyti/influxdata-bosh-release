@@ -2,19 +2,20 @@
 
 RUN_DIR=/var/vcap/sys/run/influxdata-influxdb
 LOG_DIR=/var/vcap/sys/log/influxdata-influxdb
+DATA_DIR=/var/vcap/store/influxdb
 CONF_DIR=/var/vcap/jobs/influxdata-influxdb/config
 PIDFILE=$RUN_DIR/pid
 
 case $1 in
   start)
-    mkdir -p $RUN_DIR $LOG_DIR
-    chown -R vcap:vcap $RUN_DIR $LOG_DIR
+    mkdir -p $RUN_DIR $LOG_DIR $DATA_DIR
+    chown -R vcap:vcap $RUN_DIR $LOG_DIR $DATA_DIR
 
     exec chpst -u vcap:vcap /var/vcap/packages/influxdata-influxdb/influxd \
-      -config $CONF_DIR/influxdb.config \
+      -config $CONF_DIR/influxdb.conf \
       -pidfile $PIDFILE \
-      1 >> $LOG_DIR/stdout.log \
-      2 >> $LOG_DIR/stderr.log
+      1>> $LOG_DIR/stdout.log \
+      2>> $LOG_DIR/stderr.log
     ;;
 
   stop)

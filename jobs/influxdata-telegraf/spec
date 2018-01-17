@@ -3,9 +3,44 @@ name: influxdata-telegraf
 
 templates:
   ctl.erb: bin/ctl
-  config.erb: config/telegraf.config
+  config.erb: config/telegraf.conf
+  tls/influxdb.ca.erb: tls/influxdb.ca
+  tls/influxdb.crt.erb: tls/influxdb.crt
+  tls/influxdb.key.erb: tls/influxdb.key
 
 packages:
   - influxdata-telegraf
 
-properties: {}
+consumes:
+  - name: influxdb
+    type: influxdb
+
+properties:
+  global_tags:
+    default: {}
+    description: |
+      Global tags to be merged with the embedded set:
+      deployment name, instance group name, instance id, AZ name.
+    example:
+      name: "value"
+
+  agent.hostname:
+    default: ~
+    description: |
+      Custom hostname for the instance. The null default will result in:
+      <instance_group>-<instance_id>
+    example: "value"
+
+  outputs.influxdb.username:
+    default: "telegraf"
+    description: |
+      [required]
+      Username for HTTP basic auth to the influxdb service.
+    example: "value"
+
+  outputs.influxdb.password:
+    default: ~
+    description: |
+      [required]
+      Password for HTTP basic auth to the influxdb service.
+    example: "value"

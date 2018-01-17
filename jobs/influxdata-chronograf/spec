@@ -3,7 +3,6 @@ name: influxdata-chronograf
 
 templates:
   ctl.erb: bin/ctl
-  config.erb: config/chronograf.config
 
 packages:
   - influxdata-chronograf

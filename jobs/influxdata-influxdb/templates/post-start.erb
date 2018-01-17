@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+export PATH="/var/vcap/packages/influxdata-influxdb:${PATH}"
+
+function cli() {
+  cmd="$1"
+  influx -ssl -unsafeSsl -host 127.0.0.1 -username admin -password '<%= p("admin_password") %>' -execute "${cmd}"
+}
+
+# bootstrap: create admin user
+cli 'SHOW USERS' | grep 'create admin user'
+if [ $? -ne 0 ] ; then
+  cli "CREATE USER admin WITH PASSWORD '<%= p("admin_password") %>' WITH ALL PRIVILEGES"
+fi
+
+# bootstrap: create telegraf user
+cli 'SHOW USERS' | grep 'telegraf'
+if [ $? -ne 0 ] ; then
+  cli "CREATE USER telegraf WITH PASSWORD '<%= p("telegraf_password") %>' WITH ALL PRIVILEGES"
+fi

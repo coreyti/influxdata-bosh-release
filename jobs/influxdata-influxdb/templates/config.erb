@@ -1,18 +1,19 @@
+<%
+job   = '/var/vcap/jobs/influxdata-influxdb'
+store = '/var/vcap/store/influxdb'
+%>
 reporting-disabled = false
 bind-address = "127.0.0.1:8088"
 
 [meta]
-  # dir = "/root/.influxdb/meta"
-  dir = "/var/vcap/store/influxdb/meta"
+  dir = "<%= store %>/meta"
   retention-autocreate = true
   logging-enabled = true
 
 [data]
-  # dir = "/root/.influxdb/data"
-  dir = "/var/vcap/store/influxdb/data"
+  dir = "<%= store %>/data"
   index-version = "inmem"
-  # wal-dir = "/root/.influxdb/wal"
-  wal-dir = "/var/vcap/store/influxdb/wal"
+  wal-dir = "<%= store %>/wal"
   wal-fsync-delay = "0s"
   query-log-enabled = true
   cache-max-memory-size = 1073741824
@@ -57,20 +58,19 @@ bind-address = "127.0.0.1:8088"
 
 [http]
   enabled = true
-  bind-address = ":8086"
-  auth-enabled = false
+  bind-address = ":<%= p('http.port') %>"
+  auth-enabled = true
   log-enabled = true
   write-tracing = false
   pprof-enabled = true
-  https-enabled = false
-  # https-certificate = "/etc/ssl/influxdb.pem"
-  https-private-key = ""
+  https-enabled = true
+  https-certificate = "<%= job %>/tls/influxdb.crt"
+  https-private-key = "<%= job %>/tls/influxdb.key"
   max-row-limit = 0
   max-connection-limit = 0
   shared-secret = ""
   realm = "InfluxDB"
   unix-socket-enabled = false
-  # bind-socket = "/var/run/influxdb.sock"
   bind-socket = "/var/vcap/sys/run/influxdata-influxdb/influxdb.sock"
   max-body-size = 25000000
 

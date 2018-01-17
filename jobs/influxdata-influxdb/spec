@@ -3,9 +3,71 @@ name: influxdata-influxdb
 
 templates:
   ctl.erb: bin/ctl
-  config.erb: config/influxdb.config
+  config.erb: config/influxdb.conf
+  # post-start.erb: bin/post-start
+  tls/influxdb.ca.erb: tls/influxdb.ca
+  tls/influxdb.crt.erb: tls/influxdb.crt
+  tls/influxdb.key.erb: tls/influxdb.key
 
 packages:
   - influxdata-influxdb
 
-properties: {}
+provides:
+  - name: influxdb
+    type: influxdb
+    properties:
+      - http.port
+      - http.tls.ca
+      - http.tls.certificate
+      - http.tls.private_key
+
+properties:
+  admin_password:
+    default: ~
+    description: |
+      [required]
+      Password for admin user.
+    example: "password"
+
+  telegraf_password:
+    default: ~
+    description: |
+      [required]
+      Password for telegraf user.
+    example: "password"
+
+  http.port:
+    default: 8086
+    description: |
+      Port on which to bind the HTTP API service.
+    example: 8086
+
+  http.tls.ca:
+    default: ~
+    description: |
+      [required]
+      TLS CA certificate authority content.
+    example: |
+      -----BEGIN CERTIFICATE-----
+      <snip>
+      -----END CERTIFICATE-----
+
+  http.tls.certificate:
+    default: ~
+    description: |
+      [required]
+      TLS certificate content.
+    example: |
+      -----BEGIN CERTIFICATE-----
+      <snip>
+      -----END CERTIFICATE-----
+
+  http.tls.private_key:
+    default: ~
+    description: |
+      [required]
+      TLS private key content.
+    example: |
+      -----BEGIN RSA PRIVATE KEY-----
+      <snip>
+      -----END RSA PRIVATE KEY-----

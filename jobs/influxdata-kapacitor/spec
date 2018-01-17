@@ -3,7 +3,7 @@ name: influxdata-kapacitor
 
 templates:
   ctl.erb: bin/ctl
-  config.erb: config/kapacitor.config
+  config.erb: config/kapacitor.conf
 
 packages:
   - influxdata-kapacitor
